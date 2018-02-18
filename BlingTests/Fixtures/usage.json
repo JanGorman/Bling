@@ -1,0 +1,30 @@
+{
+  "status": 200,
+  "data": {
+    "app_id": "appId",
+    "status": "active",
+    "plan": {
+      "name": "Free",
+      "quota": "1000 requests / month",
+      "update_frequency": "3600s",
+      "features": {
+        "base": false,
+        "symbols": false,
+        "experimental": true,
+        "time-series": false,
+        "convert": false,
+        "bid-ask": false,
+        "ohlc": false,
+        "spot": false
+      }
+    },
+    "usage": {
+      "requests": 7,
+      "requests_quota": 1000,
+      "requests_remaining": 993,
+      "days_elapsed": 0,
+      "days_remaining": 28,
+      "daily_average": 7
+    }
+  }
+}

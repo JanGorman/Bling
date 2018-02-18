@@ -1,0 +1,30 @@
+{
+  "disclaimer": "https://openexchangerates.org/terms/",
+  "license": "https://openexchangerates.org/license/",
+  "start_time": "2017-07-17T11:00:00Z",
+  "end_time": "2017-07-17T11:29:59Z",
+  "base": "USD",
+  "rates": {
+    "EUR": {
+      "open": 0.872674,
+      "high": 0.872674,
+      "low": 0.87203,
+      "close": 0.872251,
+      "average": 0.872253
+    },
+    "GBP": {
+      "open": 0.765284,
+      "high": 0.7657,
+      "low": 0.7652,
+      "close": 0.765541,
+      "average": 0.765503
+    },
+    "HKD": {
+      "open": 7.804003,
+      "high": 7.80568,
+      "low": 7.80399,
+      "close": 7.805248,
+      "average": 7.804725
+    }
+  }
+}
