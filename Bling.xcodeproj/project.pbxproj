@@ -13,6 +13,7 @@
 		77C036652039F97A006ADF0B /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 77C036642039F979006ADF0B /* currencies.json */; };
 		77C036672039FA3F006ADF0B /* historical.json in Resources */ = {isa = PBXBuildFile; fileRef = 77C036662039FA3F006ADF0B /* historical.json */; };
 		77C036692039FA81006ADF0B /* latest.json in Resources */ = {isa = PBXBuildFile; fileRef = 77C036682039FA81006ADF0B /* latest.json */; };
+		77E1EFE0203A193200B96FA1 /* Hippolyte.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E1EFDD203A192700B96FA1 /* Hippolyte.framework */; };
 		77E375162039D56A0048F579 /* Bling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E3750C2039D56A0048F579 /* Bling.framework */; };
 		77E3751B2039D56A0048F579 /* BlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3751A2039D56A0048F579 /* BlingTests.swift */; };
 		77E3751D2039D56A0048F579 /* Bling.h in Headers */ = {isa = PBXBuildFile; fileRef = 77E3750F2039D56A0048F579 /* Bling.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -22,30 +23,29 @@
 		77E375312039E4A10048F579 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E375302039E4A10048F579 /* Conversion.swift */; };
 		77E375332039E9DE0048F579 /* OHLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E375322039E9DE0048F579 /* OHLC.swift */; };
 		77E375352039EB6F0048F579 /* Usage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E375342039EB6F0048F579 /* Usage.swift */; };
-		77E375412039ED260048F579 /* Hippolyte.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E3753D2039ED1D0048F579 /* Hippolyte.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		77E1EFDC203A192700B96FA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77E1EFD7203A192700B96FA1 /* Hippolyte.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77A290CE1F62EADF001E70FA;
+			remoteInfo = Hippolyte;
+		};
+		77E1EFDE203A192700B96FA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77E1EFD7203A192700B96FA1 /* Hippolyte.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77A290D71F62EADF001E70FA;
+			remoteInfo = HippolyteTests;
+		};
 		77E375172039D56A0048F579 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 77E375032039D56A0048F579 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 77E3750B2039D56A0048F579;
 			remoteInfo = Bling;
-		};
-		77E3753C2039ED1D0048F579 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 77E375372039ED1D0048F579 /* Hippolyte.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 77A290CE1F62EADF001E70FA;
-			remoteInfo = Hippolyte;
-		};
-		77E3753E2039ED1D0048F579 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 77E375372039ED1D0048F579 /* Hippolyte.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 77A290D71F62EADF001E70FA;
-			remoteInfo = HippolyteTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -56,6 +56,7 @@
 		77C036642039F979006ADF0B /* currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies.json; sourceTree = "<group>"; };
 		77C036662039FA3F006ADF0B /* historical.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = historical.json; sourceTree = "<group>"; };
 		77C036682039FA81006ADF0B /* latest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = latest.json; sourceTree = "<group>"; };
+		77E1EFD7203A192700B96FA1 /* Hippolyte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Hippolyte.xcodeproj; path = Frameworks/Hippolyte/Hippolyte.xcodeproj; sourceTree = "<group>"; };
 		77E3750C2039D56A0048F579 /* Bling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E3750F2039D56A0048F579 /* Bling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bling.h; sourceTree = "<group>"; };
 		77E375102039D56A0048F579 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		77E375302039E4A10048F579 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		77E375322039E9DE0048F579 /* OHLC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLC.swift; sourceTree = "<group>"; };
 		77E375342039EB6F0048F579 /* Usage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usage.swift; sourceTree = "<group>"; };
-		77E375372039ED1D0048F579 /* Hippolyte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Hippolyte.xcodeproj; path = Bling/Frameworks/Hippolyte/Hippolyte.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77E375412039ED260048F579 /* Hippolyte.framework in Frameworks */,
+				77E1EFE0203A193200B96FA1 /* Hippolyte.framework in Frameworks */,
 				77E375162039D56A0048F579 /* Bling.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,10 +104,19 @@
 			path = Fixtures;
 			sourceTree = "<group>";
 		};
+		77E1EFD8203A192700B96FA1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77E1EFDD203A192700B96FA1 /* Hippolyte.framework */,
+				77E1EFDF203A192700B96FA1 /* HippolyteTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		77E375022039D56A0048F579 = {
 			isa = PBXGroup;
 			children = (
-				77E375372039ED1D0048F579 /* Hippolyte.xcodeproj */,
+				77E1EFD7203A192700B96FA1 /* Hippolyte.xcodeproj */,
 				77E3750E2039D56A0048F579 /* Bling */,
 				77E375192039D56A0048F579 /* BlingTests */,
 				77E3750D2039D56A0048F579 /* Products */,
@@ -149,15 +158,6 @@
 			path = BlingTests;
 			sourceTree = "<group>";
 		};
-		77E375382039ED1D0048F579 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				77E3753D2039ED1D0048F579 /* Hippolyte.framework */,
-				77E3753F2039ED1D0048F579 /* HippolyteTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		77E375402039ED260048F579 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +187,7 @@
 				77E375082039D56A0048F579 /* Frameworks */,
 				77E375092039D56A0048F579 /* Headers */,
 				77E3750A2039D56A0048F579 /* Resources */,
+				77E1EFE2203A199600B96FA1 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -248,8 +249,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 77E375382039ED1D0048F579 /* Products */;
-					ProjectRef = 77E375372039ED1D0048F579 /* Hippolyte.xcodeproj */;
+					ProductGroup = 77E1EFD8203A192700B96FA1 /* Products */;
+					ProjectRef = 77E1EFD7203A192700B96FA1 /* Hippolyte.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -261,18 +262,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		77E3753D2039ED1D0048F579 /* Hippolyte.framework */ = {
+		77E1EFDD203A192700B96FA1 /* Hippolyte.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Hippolyte.framework;
-			remoteRef = 77E3753C2039ED1D0048F579 /* PBXContainerItemProxy */;
+			remoteRef = 77E1EFDC203A192700B96FA1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		77E3753F2039ED1D0048F579 /* HippolyteTests.xctest */ = {
+		77E1EFDF203A192700B96FA1 /* HippolyteTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = HippolyteTests.xctest;
-			remoteRef = 77E3753E2039ED1D0048F579 /* PBXContainerItemProxy */;
+			remoteRef = 77E1EFDE203A192700B96FA1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -299,6 +300,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		77E1EFE2203A199600B96FA1 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		77E375072039D56A0048F579 /* Sources */ = {

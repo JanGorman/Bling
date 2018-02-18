@@ -34,7 +34,7 @@ class BlingTests: XCTestCase {
         XCTAssertEqual(conversion.request.from, "GBP")
         XCTAssertEqual(conversion.request.to, "EUR")
       case .failure:
-        XCTFail()
+        XCTFail("Missing response")
       }
     }
     wait(for: [expectation], timeout: 5)
@@ -53,7 +53,7 @@ class BlingTests: XCTestCase {
       case .success(let currencies):
         XCTAssertFalse(currencies.isEmpty)
       case .failure:
-        XCTFail()
+        XCTFail("Missing response")
       }
     }
     wait(for: [expectation], timeout: 5)
@@ -75,7 +75,7 @@ class BlingTests: XCTestCase {
         XCTAssertEqual(historical.base, "USD")
         XCTAssertFalse(historical.rates.isEmpty)
       case .failure:
-        XCTFail()
+        XCTFail("Missing response")
       }
     }
     wait(for: [expectation], timeout: 5)
@@ -95,7 +95,7 @@ class BlingTests: XCTestCase {
         XCTAssertEqual(latest.base, "USD")
         XCTAssertFalse(latest.rates.isEmpty)
       case .failure:
-        XCTFail()
+        XCTFail("Missing response")
       }
     }
     wait(for: [expectation], timeout: 5)
@@ -118,7 +118,7 @@ class BlingTests: XCTestCase {
         XCTAssertFalse(ohlc.rates.isEmpty)
         XCTAssertNotNil(ohlc.rates["EUR"])
       case .failure:
-        XCTFail()
+        XCTFail("Missing response")
       }
     }
     wait(for: [expectation], timeout: 5)
@@ -140,7 +140,7 @@ class BlingTests: XCTestCase {
         XCTAssertEqual(usage.requests, 7)
         XCTAssertEqual(usage.quota, 1_000)
       case .failure:
-        XCTFail()
+        XCTFail("Missing response")
       }
     }
     wait(for: [expectation], timeout: 5)

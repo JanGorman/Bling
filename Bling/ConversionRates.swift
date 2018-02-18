@@ -13,4 +13,3 @@ public struct ConversionRates: Codable {
   public let rates: [String: Double]
 
 }
-

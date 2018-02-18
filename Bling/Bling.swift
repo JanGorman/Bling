@@ -47,7 +47,7 @@ open class Bling {
 
   /// Retrieve OHLC https://docs.openexchangerates.org/docs/ohlc-json
   public func ohlc(base: String = "USD", startTime: Date, period: String, symbols: String...,
-    completion: @escaping (Result<OHLC>) -> Void) {
+                   completion: @escaping (Result<OHLC>) -> Void) {
     newTask(url: BlingUrl.ohlc(appId: appId, base: base, startTime: startTime, period: period, symbols: symbols),
             completion: completion).resume()
   }
@@ -95,7 +95,9 @@ private enum BlingUrl {
   private func url(path: String, queryItems: [String: String]) -> URL {
     var components = URLComponents(string: BlingUrl.baseUrl)
     components?.path += path
-    components?.queryItems = queryItems.map( { k, v in return URLQueryItem(name: k, value: v) })
+    components?.queryItems = queryItems.map { key, value in
+      return URLQueryItem(name: key, value: value)
+    }
     return components!.url!
   }
 

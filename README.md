@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/JanGorman/Bling.svg?branch=master)](https://travis-ci.org/JanGorman/Bling)
 
-An Open Exchange Rates API wrapper written in Swift
+An [Open Exchange Rates](https://openexchangerates.org) API wrapper written in Swift
 
 ## Requirements
 
