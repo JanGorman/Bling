@@ -1,6 +1,10 @@
 # Bling 💰
 
 [![Build Status](https://travis-ci.org/JanGorman/Bling.svg?branch=master)](https://travis-ci.org/JanGorman/Bling)
+[![Version](https://img.shields.io/cocoapods/v/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
+[![License](https://img.shields.io/cocoapods/l/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
+[![Platform](https://img.shields.io/cocoapods/p/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 An [Open Exchange Rates](https://openexchangerates.org) API wrapper written in Swift
 
