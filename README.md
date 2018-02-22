@@ -1,6 +1,7 @@
 # Bling 💰
 
 [![Build Status](https://travis-ci.org/JanGorman/Bling.svg?branch=master)](https://travis-ci.org/JanGorman/Bling)
+[![codecov](https://codecov.io/gh/JanGorman/Bling/branch/master/graph/badge.svg)](https://codecov.io/gh/JanGorman/Bling)
 [![Version](https://img.shields.io/cocoapods/v/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
 [![License](https://img.shields.io/cocoapods/l/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
 [![Platform](https://img.shields.io/cocoapods/p/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
