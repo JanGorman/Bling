@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Bling"
-  s.version      = "1.1.0"
+  s.version      = "1.2.0"
   s.summary      = "Open Exchange Rates API wrapper written in Swift"
 
   s.description  = <<-DESC

@@ -11,7 +11,7 @@ An [Open Exchange Rates](https://openexchangerates.org) API wrapper written in S
 
 ## Requirements
 
-- Swift 4.1
+- Swift 4.2
 - iOS 10.0+
 - Xcode 9+
 
