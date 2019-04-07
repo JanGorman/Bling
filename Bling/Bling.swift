@@ -15,17 +15,23 @@ open class Bling {
   }
 
   /// Convert from one currency to another https://docs.openexchangerates.org/docs/convert
-  public func convert(value: Double, from: String, to: String, completion: @escaping (Result<Conversion>) -> Void) {
+  public func convert(value: Double, from: String, to: String, completion: @escaping (Result<Conversion, Error>) -> Void) {
     newTask(url: BlingUrl.conversion(appId: appId, value: value, from: from, to: to), completion: completion).resume()
   }
 
-  private func newTask<T: Decodable>(url: BlingUrl, completion: @escaping (Result<T>) -> Void) -> URLSessionDataTask {
+  private func newTask<T: Decodable>(url: BlingUrl, completion: @escaping (Result<T, Error>) -> Void) -> URLSessionDataTask {
     return session.dataTask(with: url.toUrl()) { data, _, error in
-      var response: T? = nil
+      var response: T?
       defer {
-        completion(Result(value: response, error: error))
+        if let response = response, error == nil {
+          completion(.success(response))
+        } else if let error = error {
+          completion(.failure(error))
+        }
       }
-      guard let data = data else { return }
+      guard let data = data else {
+        return
+      }
       let decoder = JSONDecoder()
       decoder.dateDecodingStrategy = .iso8601
       response = try? decoder.decode(T.self, from: data)
@@ -33,29 +39,29 @@ open class Bling {
   }
 
   /// Retrieve dictionary of available currencies https://docs.openexchangerates.org/docs/currencies-json
-  public func currencies(completion: @escaping (Result<[String: String]>) -> Void) {
+  public func currencies(completion: @escaping (Result<[String: String], Error>) -> Void) {
     newTask(url: BlingUrl.currencies(appId: appId), completion: completion).resume()
   }
 
   /// Retrive historical conversion rates https://docs.openexchangerates.org/docs/historical-json
-  public func historical(base: String = "USD", date: Date, completion: @escaping (Result<ConversionRates>) -> Void) {
+  public func historical(base: String = "USD", date: Date, completion: @escaping (Result<ConversionRates, Error>) -> Void) {
     newTask(url: BlingUrl.historical(appId: appId, base: base, date: date), completion: completion).resume()
   }
 
   /// Retrieve latest conversion rates https://docs.openexchangerates.org/docs/latest-json
-  public func latest(base: String = "USD", completion: @escaping (Result<ConversionRates>) -> Void) {
+  public func latest(base: String = "USD", completion: @escaping (Result<ConversionRates, Error>) -> Void) {
     newTask(url: BlingUrl.latest(appId: appId, base: base), completion: completion).resume()
   }
 
   /// Retrieve OHLC https://docs.openexchangerates.org/docs/ohlc-json
   public func ohlc(base: String = "USD", startTime: Date, period: String, symbols: String...,
-                   completion: @escaping (Result<OHLC>) -> Void) {
+                   completion: @escaping (Result<OHLC, Error>) -> Void) {
     newTask(url: BlingUrl.ohlc(appId: appId, base: base, startTime: startTime, period: period, symbols: symbols),
             completion: completion).resume()
   }
 
   /// Retrieve your API usage https://docs.openexchangerates.org/docs/usage-json
-  public func usage(completion: @escaping (Result<Usage>) -> Void) {
+  public func usage(completion: @escaping (Result<Usage, Error>) -> Void) {
     newTask(url: BlingUrl.usage(appId: appId), completion: completion).resume()
   }
 
