@@ -4,26 +4,13 @@
 
 import XCTest
 import Bling
-import Hippolyte
 
 class BlingTests: XCTestCase {
-
-  let bling = Bling(appId: "")
-  
-  override func setUp() {
-    super.setUp()
-    Hippolyte.shared.start()
-  }
-
-  override func tearDown() {
-    Hippolyte.shared.clearStubs()
-    super.tearDown()
-  }
 
   func testConversion() throws {
     let expectation = self.expectation(description: "Conversion")
 
-    try addStubbedRequest(withFixture: "conversion")
+    let bling = try makeBling(withFixture: "conversion")
 
     bling.convert(value: 19999.95, from: "GBP", to: "EUR") { response in
       defer {
@@ -43,7 +30,7 @@ class BlingTests: XCTestCase {
   func testCurrencies() throws {
     let expectation = self.expectation(description: "Currencies")
 
-    try addStubbedRequest(withFixture: "currencies")
+    let bling = try makeBling(withFixture: "currencies")
 
     bling.currencies { response in
       defer {
@@ -62,7 +49,7 @@ class BlingTests: XCTestCase {
   func testHistorical() throws {
     let expectation = self.expectation(description: "Historical")
 
-    try addStubbedRequest(withFixture: "historical")
+    let bling = try makeBling(withFixture: "historical")
 
     let date = Date(timeIntervalSince1970: 982281601)
 
@@ -84,7 +71,7 @@ class BlingTests: XCTestCase {
   func testLatest() throws {
     let expectation = self.expectation(description: "Latest")
 
-    try addStubbedRequest(withFixture: "latest")
+    let bling = try makeBling(withFixture: "latest")
 
     bling.latest { response in
       defer {
@@ -104,7 +91,7 @@ class BlingTests: XCTestCase {
   func testOHLC() throws {
     let expectation = self.expectation(description: "OHLC")
 
-    try addStubbedRequest(withFixture: "ohlc")
+    let bling = try makeBling(withFixture: "ohlc")
 
     let date = Date(timeIntervalSince1970: 1500289200)
 
@@ -127,7 +114,7 @@ class BlingTests: XCTestCase {
   func testUsage() throws {
     let expectation = self.expectation(description: "Usage")
 
-    try addStubbedRequest(withFixture: "usage")
+    let bling = try makeBling(withFixture: "usage")
 
     bling.usage { response in
       defer {
@@ -146,13 +133,13 @@ class BlingTests: XCTestCase {
     wait(for: [expectation], timeout: 5)
   }
 
-  func addStubbedRequest(withFixture name: String) throws {
+  func makeBling(withFixture name: String) throws -> Bling {
     let fixture = try loadFixture(named: name)
-    let response = StubResponse.Builder().stubResponse(withStatusCode: 200).addBody(fixture).build()
-    let regex = try NSRegularExpression(pattern: "https://openexchangerates.org/api/+", options: [])
-    let matcher = RegexMatcher(regex: regex)
-    let request = StubRequest.Builder().stubRequest(withMethod: .GET, urlMatcher: matcher).addResponse(response).build()
-    Hippolyte.shared.add(stubbedRequest: request)
+    MockURLProtocol.requestHandler = { _ in
+      return (HTTPURLResponse(), fixture)
+    }
+    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
+    return Bling(appId: "", sessionConfiguration: configuration)
   }
 
   func loadFixture(named name: String) throws -> Data {

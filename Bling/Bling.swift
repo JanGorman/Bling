@@ -7,9 +7,11 @@ import Foundation
 open class Bling {
 
   private let appId: String
+  private let session: URLSession
 
-  public init(appId: String) {
+  public init(appId: String, sessionConfiguration: URLSessionConfiguration = .default) {
     self.appId = appId
+    self.session = URLSession(configuration: sessionConfiguration)
   }
 
   /// Convert from one currency to another https://docs.openexchangerates.org/docs/convert
@@ -18,7 +20,7 @@ open class Bling {
   }
 
   private func newTask<T: Decodable>(url: BlingUrl, completion: @escaping (Result<T>) -> Void) -> URLSessionDataTask {
-    return URLSession.shared.dataTask(with: url.toUrl()) { data, _, error in
+    return session.dataTask(with: url.toUrl()) { data, _, error in
       var response: T? = nil
       defer {
         completion(Result(value: response, error: error))
