@@ -4,145 +4,128 @@
 
 import XCTest
 import Bling
+import Combine
 
-class BlingTests: XCTestCase {
+final class BlingTests: XCTestCase {
+
+  private var subscriptions: Set<AnyCancellable> = []
+
+  override func tearDown() {
+    subscriptions.removeAll()
+  }
 
   func testConversion() throws {
-    let expectation = self.expectation(description: "Conversion")
-
+    let expectation = self.expectation(description: #function)
     let bling = try makeBling(withFixture: "conversion")
+    var result: Conversion!
 
-    bling.convert(value: 19999.95, from: "GBP", to: "EUR") { response in
-      defer {
-        expectation.fulfill()
-      }
-      switch response {
-      case .success(let conversion):
-        XCTAssertEqual(conversion.request.from, "GBP")
-        XCTAssertEqual(conversion.request.to, "EUR")
-      case .failure:
-        XCTFail("Missing response")
-      }
-    }
-    wait(for: [expectation], timeout: 5)
+    bling.convert(value: 19_999.95, from: "GBP", to: "EUR")
+      .sink(receiveCompletion: { _ in expectation.fulfill() },
+            receiveValue: { result = $0 })
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+
+    XCTAssertEqual(result.request.from, "GBP")
+    XCTAssertEqual(result.request.to, "EUR")
   }
 
   func testCurrencies() throws {
-    let expectation = self.expectation(description: "Currencies")
-
+    let expectation = self.expectation(description: #function)
     let bling = try makeBling(withFixture: "currencies")
+    var result: [String: String]!
 
-    bling.currencies { response in
-      defer {
-        expectation.fulfill()
-      }
-      switch response {
-      case .success(let currencies):
-        XCTAssertFalse(currencies.isEmpty)
-      case .failure:
-        XCTFail("Missing response")
-      }
-    }
-    wait(for: [expectation], timeout: 5)
+    bling.currencies()
+      .sink(receiveCompletion: { _ in expectation.fulfill()},
+            receiveValue: { result = $0 })
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+
+    XCTAssertFalse(result.isEmpty)
   }
 
   func testHistorical() throws {
-    let expectation = self.expectation(description: "Historical")
-
+    let expectation = self.expectation(description: #function)
     let bling = try makeBling(withFixture: "historical")
+    var result: ConversionRates!
 
     let date = Date(timeIntervalSince1970: 982281601)
 
-    bling.historical(date: date) { response in
-      defer {
-        expectation.fulfill()
-      }
-      switch response {
-      case .success(let historical):
-        XCTAssertEqual(historical.base, "USD")
-        XCTAssertFalse(historical.rates.isEmpty)
-      case .failure:
-        XCTFail("Missing response")
-      }
-    }
-    wait(for: [expectation], timeout: 5)
+    bling.historical(date: date)
+      .sink(receiveCompletion: { _ in expectation.fulfill()},
+            receiveValue: { result = $0 })
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+
+    XCTAssertEqual(result.base, "USD")
+    XCTAssertFalse(result.rates.isEmpty)
   }
 
   func testLatest() throws {
-    let expectation = self.expectation(description: "Latest")
-
+    let expectation = self.expectation(description: #function)
     let bling = try makeBling(withFixture: "latest")
+    var result: ConversionRates!
 
-    bling.latest { response in
-      defer {
-        expectation.fulfill()
-      }
-      switch response {
-      case .success(let latest):
-        XCTAssertEqual(latest.base, "USD")
-        XCTAssertFalse(latest.rates.isEmpty)
-      case .failure:
-        XCTFail("Missing response")
-      }
-    }
-    wait(for: [expectation], timeout: 5)
+    bling.latest()
+      .sink(receiveCompletion: { _ in expectation.fulfill()},
+            receiveValue: { result = $0 })
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+
+    XCTAssertEqual(result.base, "USD")
+    XCTAssertFalse(result.rates.isEmpty)
   }
 
   func testOHLC() throws {
-    let expectation = self.expectation(description: "OHLC")
-
+    let expectation = self.expectation(description: #function)
     let bling = try makeBling(withFixture: "ohlc")
+    var result: OHLC!
 
     let date = Date(timeIntervalSince1970: 1500289200)
 
-    bling.ohlc(startTime: date, period: "30m", symbols: "GBP", "EUR", "HKD") { response in
-      defer {
-        expectation.fulfill()
-      }
-      switch response {
-      case .success(let ohlc):
-        XCTAssertEqual(ohlc.base, "USD")
-        XCTAssertFalse(ohlc.rates.isEmpty)
-        XCTAssertNotNil(ohlc.rates["EUR"])
-      case .failure:
-        XCTFail("Missing response")
-      }
-    }
-    wait(for: [expectation], timeout: 5)
+    bling.ohlc(startTime: date, period: "30m", symbols: "GBP", "EUR", "HKD")
+      .sink(receiveCompletion: { _ in expectation.fulfill()},
+            receiveValue: { result = $0 })
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+
+    XCTAssertEqual(result.base, "USD")
+    XCTAssertFalse(result.rates.isEmpty)
+    XCTAssertNotNil(result.rates["EUR"])
   }
 
   func testUsage() throws {
-    let expectation = self.expectation(description: "Usage")
-
+    let expectation = self.expectation(description: #function)
     let bling = try makeBling(withFixture: "usage")
+    var result: Usage!
 
-    bling.usage { response in
-      defer {
-        expectation.fulfill()
-      }
-      switch response {
-      case .success(let usage):
-        XCTAssertEqual(usage.status, .active)
-        XCTAssertFalse(usage.plan.features.base)
-        XCTAssertEqual(usage.requests, 7)
-        XCTAssertEqual(usage.quota, 1_000)
-      case .failure:
-        XCTFail("Missing response")
-      }
-    }
-    wait(for: [expectation], timeout: 5)
+    bling.usage()
+      .sink(receiveCompletion: { _ in expectation.fulfill()},
+            receiveValue: { result = $0 })
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+
+    XCTAssertEqual(result.status, .active)
+    XCTAssertFalse(result.plan.features.base)
+    XCTAssertEqual(result.requests, 7)
+    XCTAssertEqual(result.quota, 1_000)
   }
 
-  func makeBling(withFixture name: String) throws -> Bling {
+  private func makeBling(withFixture name: String) throws -> Bling {
     let fixture = try loadFixture(named: name)
     MockURLProtocol.requestHandler = { _ in
-      return (HTTPURLResponse(), fixture)
+      (HTTPURLResponse(), fixture)
     }
     let configuration = MockURLProtocol.mockedURLSessionConfiguration()
     return Bling(appId: "", sessionConfiguration: configuration)
   }
 
-  func loadFixture(named name: String) throws -> Data {
+  private func loadFixture(named name: String) throws -> Data {
     let url = Bundle(for: type(of: self)).url(forResource: name, withExtension: "json")!
     return try Data(contentsOf: url)
   }

@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import Combine
 
 open class Bling {
 
@@ -15,54 +16,43 @@ open class Bling {
   }
 
   /// Convert from one currency to another https://docs.openexchangerates.org/docs/convert
-  public func convert(value: Double, from: String, to: String, completion: @escaping (Result<Conversion, Error>) -> Void) {
-    newTask(url: BlingUrl.conversion(appId: appId, value: value, from: from, to: to), completion: completion).resume()
-  }
-
-  private func newTask<T: Decodable>(url: BlingUrl, completion: @escaping (Result<T, Error>) -> Void) -> URLSessionDataTask {
-    return session.dataTask(with: url.toUrl()) { data, _, error in
-      var response: T?
-      defer {
-        if let response = response, error == nil {
-          completion(.success(response))
-        } else if let error = error {
-          completion(.failure(error))
-        }
-      }
-      guard let data = data else {
-        return
-      }
-      let decoder = JSONDecoder()
-      decoder.dateDecodingStrategy = .iso8601
-      response = try? decoder.decode(T.self, from: data)
-    }
+  public func convert(value: Double, from: String, to: String) -> AnyPublisher<Conversion, Error> {
+    newTask(url: BlingUrl.conversion(appId: appId, value: value, from: from, to: to))
   }
 
   /// Retrieve dictionary of available currencies https://docs.openexchangerates.org/docs/currencies-json
-  public func currencies(completion: @escaping (Result<[String: String], Error>) -> Void) {
-    newTask(url: BlingUrl.currencies(appId: appId), completion: completion).resume()
+  public func currencies() -> AnyPublisher<[String: String], Error> {
+    newTask(url: BlingUrl.currencies(appId: appId))
   }
 
-  /// Retrive historical conversion rates https://docs.openexchangerates.org/docs/historical-json
-  public func historical(base: String = "USD", date: Date, completion: @escaping (Result<ConversionRates, Error>) -> Void) {
-    newTask(url: BlingUrl.historical(appId: appId, base: base, date: date), completion: completion).resume()
+  /// Retrieve historical conversion rates https://docs.openexchangerates.org/docs/historical-json
+  public func historical(base: String = "USD", date: Date) -> AnyPublisher<ConversionRates, Error> {
+    newTask(url: BlingUrl.historical(appId: appId, base: base, date: date))
   }
 
   /// Retrieve latest conversion rates https://docs.openexchangerates.org/docs/latest-json
-  public func latest(base: String = "USD", completion: @escaping (Result<ConversionRates, Error>) -> Void) {
-    newTask(url: BlingUrl.latest(appId: appId, base: base), completion: completion).resume()
+  public func latest(base: String = "USD") -> AnyPublisher<ConversionRates, Error> {
+    newTask(url: BlingUrl.latest(appId: appId, base: base))
   }
 
   /// Retrieve OHLC https://docs.openexchangerates.org/docs/ohlc-json
-  public func ohlc(base: String = "USD", startTime: Date, period: String, symbols: String...,
-                   completion: @escaping (Result<OHLC, Error>) -> Void) {
-    newTask(url: BlingUrl.ohlc(appId: appId, base: base, startTime: startTime, period: period, symbols: symbols),
-            completion: completion).resume()
+  public func ohlc(base: String = "USD", startTime: Date, period: String, symbols: String...) -> AnyPublisher<OHLC, Error> {
+    newTask(url: BlingUrl.ohlc(appId: appId, base: base, startTime: startTime, period: period, symbols: symbols))
   }
 
   /// Retrieve your API usage https://docs.openexchangerates.org/docs/usage-json
-  public func usage(completion: @escaping (Result<Usage, Error>) -> Void) {
-    newTask(url: BlingUrl.usage(appId: appId), completion: completion).resume()
+  public func usage() -> AnyPublisher<Usage, Error> {
+    newTask(url: BlingUrl.usage(appId: appId))
+  }
+
+  private func newTask<T: Decodable>(url: BlingUrl) -> AnyPublisher<T, Error> {
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+
+    return session.dataTaskPublisher(for: url.toUrl())
+      .map { $0.0 }
+      .decode(type: T.self, decoder: decoder)
+      .eraseToAnyPublisher()
   }
 
 }
@@ -104,7 +94,7 @@ private enum BlingUrl {
     var components = URLComponents(string: BlingUrl.baseUrl)
     components?.path += path
     components?.queryItems = queryItems.map { key, value in
-      return URLQueryItem(name: key, value: value)
+      URLQueryItem(name: key, value: value)
     }
     return components!.url!
   }

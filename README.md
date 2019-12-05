@@ -7,13 +7,12 @@
 [![Platform](https://img.shields.io/cocoapods/p/Bling.svg?style=flat)](http://cocoapods.org/pods/Bling)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-An [Open Exchange Rates](https://openexchangerates.org) API wrapper written in Swift
+An [Open Exchange Rates](https://openexchangerates.org) API wrapper written in Swift using Combine.
 
 ## Requirements
 
-- Swift 5
-- iOS 10.0+
-- Xcode 10.2+
+- Swift 5.1
+- iOS 13.0+
 
 ## Install
 
@@ -29,14 +28,11 @@ To use Bling you need to create a new instance and pass it your app id:
 
 ```swift
 let bling = Bling(appId: "…")
-bling.latest { response in
-  switch response {
-  case .success(let latest):
-    print(latest.rates)
-  case .failure(let error):
-    // 😵
-  }
-}
+
+bling.latest()
+  .sink(receiveCompletion: { … },
+        receiveValue: { print($0) })
+  .store(in: &subscriptions)
 ```
 
 ## Tests
