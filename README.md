@@ -30,14 +30,10 @@ To use Bling you need to create a new instance and pass it your app id:
 let bling = Bling(appId: "…")
 
 bling.latest()
-  .sink(receiveCompletion: { … },
+  .sink(receiveCompletion: { _ in },
         receiveValue: { print($0) })
   .store(in: &subscriptions)
 ```
-
-## Tests
-
-Bling uses [Hippolyte](https://github.com/JanGorman/Hippolyte) for stubbing network requests so if you'd like to run the tests yourself, after checking out the repository, run `git submodule init` to fetch the dependency.
 
 ## License
 
