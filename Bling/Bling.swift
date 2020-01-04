@@ -50,7 +50,7 @@ open class Bling {
     decoder.dateDecodingStrategy = .iso8601
 
     return session.dataTaskPublisher(for: url.toUrl())
-      .map { $0.0 }
+      .map(\.data)
       .decode(type: T.self, decoder: decoder)
       .eraseToAnyPublisher()
   }
