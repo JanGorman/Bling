@@ -35,7 +35,7 @@ public struct OHLC: Decodable {
 
 }
 
-public struct Rate: Codable {
+public struct Rate: Decodable {
 
   public let open: Double
   public let high: Double
