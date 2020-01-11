@@ -1,7 +1,0 @@
-language: objective-c
-osx_image: xcode11.2
-script:
-  - bundle exec fastlane scan --code_coverage true --project Bling.xcodeproj --scheme Bling
-  - bundle exec danger
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
