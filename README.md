@@ -37,4 +37,4 @@ bling.latest()
 
 ## License
 
-Hippolyte is released under the MIT license. See LICENSE for details
+Bling is released under the MIT license. See LICENSE for details
