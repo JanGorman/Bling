@@ -16,7 +16,7 @@ final class BlingTests: XCTestCase {
 
   func testConversion() throws {
     let expectation = self.expectation(description: #function)
-    let bling = try makeBling(withFixture: "conversion")
+    let bling = makeBling(withFixture: "conversion")
     var result: Conversion!
 
     bling.convert(value: 19_999.95, from: "GBP", to: "EUR")
@@ -32,7 +32,7 @@ final class BlingTests: XCTestCase {
 
   func testCurrencies() throws {
     let expectation = self.expectation(description: #function)
-    let bling = try makeBling(withFixture: "currencies")
+    let bling = makeBling(withFixture: "currencies")
     var result: [String: String]!
 
     bling.currencies()
@@ -47,7 +47,7 @@ final class BlingTests: XCTestCase {
 
   func testHistorical() throws {
     let expectation = self.expectation(description: #function)
-    let bling = try makeBling(withFixture: "historical")
+    let bling = makeBling(withFixture: "historical")
     var result: ConversionRates!
 
     let date = Date(timeIntervalSince1970: 982281601)
@@ -65,7 +65,7 @@ final class BlingTests: XCTestCase {
 
   func testLatest() throws {
     let expectation = self.expectation(description: #function)
-    let bling = try makeBling(withFixture: "latest")
+    let bling = makeBling(withFixture: "latest")
     var result: ConversionRates!
 
     bling.latest()
@@ -81,7 +81,7 @@ final class BlingTests: XCTestCase {
 
   func testOHLC() throws {
     let expectation = self.expectation(description: #function)
-    let bling = try makeBling(withFixture: "ohlc")
+    let bling = makeBling(withFixture: "ohlc")
     var result: OHLC!
 
     let date = Date(timeIntervalSince1970: 1500289200)
@@ -100,7 +100,7 @@ final class BlingTests: XCTestCase {
 
   func testUsage() throws {
     let expectation = self.expectation(description: #function)
-    let bling = try makeBling(withFixture: "usage")
+    let bling = makeBling(withFixture: "usage")
     var result: Usage!
 
     bling.usage()
@@ -116,18 +116,33 @@ final class BlingTests: XCTestCase {
     XCTAssertEqual(result.quota, 1_000)
   }
 
-  private func makeBling(withFixture name: String) throws -> Bling {
-    let fixture = try loadFixture(named: name)
-    MockURLProtocol.requestHandler = { _ in
-      (HTTPURLResponse(), fixture)
-    }
-    let configuration = MockURLProtocol.mockedURLSessionConfiguration()
-    return Bling(appId: "", sessionConfiguration: configuration)
+  func testError() throws {
+    let expectation = self.expectation(description: #function)
+    let bling = Bling(appId: "", sessionConfiguration: .failed)
+    var networkError: NSError!
+
+    bling.usage()
+      .sink(
+        receiveCompletion: { result in
+          defer {
+            expectation.fulfill()
+          }
+          guard case let .failure(error) = result else {
+            XCTFail()
+            return
+          }
+          networkError = error as NSError
+        },
+        receiveValue: { _ in }
+      )
+      .store(in: &subscriptions)
+
+    waitForExpectations(timeout: 1, handler: nil)
+    XCTAssertNotNil(networkError)
+    XCTAssertEqual(networkError.domain, NSURLErrorDomain)
   }
 
-  private func loadFixture(named name: String) throws -> Data {
-    let url = Bundle(for: type(of: self)).url(forResource: name, withExtension: "json")!
-    return try Data(contentsOf: url)
+  private func makeBling(withFixture fixture: String) -> Bling {
+    Bling(appId: "", sessionConfiguration: .withFixture(fixture))
   }
-
 }

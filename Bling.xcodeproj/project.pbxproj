@@ -21,7 +21,7 @@
 		77E375312039E4A10048F579 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E375302039E4A10048F579 /* Conversion.swift */; };
 		77E375332039E9DE0048F579 /* OHLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E375322039E9DE0048F579 /* OHLC.swift */; };
 		77E375352039EB6F0048F579 /* Usage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E375342039EB6F0048F579 /* Usage.swift */; };
-		F2790B64225A4CEE003E1BE5 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2790B63225A4CEE003E1BE5 /* MockURLProtocol.swift */; };
+		F27C68A32573DDFA00E7C314 /* MockedURLSessionConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27C68A22573DDFA00E7C314 /* MockedURLSessionConfigurations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		77E375302039E4A10048F579 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		77E375322039E9DE0048F579 /* OHLC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLC.swift; sourceTree = "<group>"; };
 		77E375342039EB6F0048F579 /* Usage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usage.swift; sourceTree = "<group>"; };
-		F2790B63225A4CEE003E1BE5 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		F27C68A22573DDFA00E7C314 /* MockedURLSessionConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedURLSessionConfigurations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +126,7 @@
 				77C0365D2039EE0E006ADF0B /* Fixtures */,
 				77E3751A2039D56A0048F579 /* BlingTests.swift */,
 				77E3751C2039D56A0048F579 /* Info.plist */,
-				F2790B63225A4CEE003E1BE5 /* MockURLProtocol.swift */,
+				F27C68A22573DDFA00E7C314 /* MockedURLSessionConfigurations.swift */,
 			);
 			path = BlingTests;
 			sourceTree = "<group>";
@@ -195,7 +195,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Schnaub;
 				TargetAttributes = {
 					77E3750B2039D56A0048F579 = {
@@ -269,8 +269,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F27C68A32573DDFA00E7C314 /* MockedURLSessionConfigurations.swift in Sources */,
 				77E3751B2039D56A0048F579 /* BlingTests.swift in Sources */,
-				F2790B64225A4CEE003E1BE5 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +310,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -373,6 +374,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
